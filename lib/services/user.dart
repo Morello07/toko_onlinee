@@ -1,72 +1,50 @@
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 import '../models/response_data_map.dart';
 import '../models/user_login.dart';
-import './url.dart' as url;
-import 'package:http/http.dart' as http;
-
+import './url.dart'; // Import URL
 
 class UserService {
   Future registerUser(data) async {
-    var uri = Uri.parse(url.BaseUrl + "/auth/register");
-    var register = await http.post(uri, body: data);
+    var uri = Uri.parse("$Base_Url/register_admin"); // Pakai BaseUrl dari url.dart
+    var response = await http.post(uri, body: data);
 
-
-    if (register.statusCode == 200) {
-      var data = json.decode(register.body);
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
       if (data["status"] == true) {
-        ResponseDataMap response = ResponseDataMap(
-            status: true, message: "Sukses menambah user", data: data);
-        return response;
+        return ResponseDataMap(status: true, message: "Sukses menambah user", data: data);
       } else {
-        var message = '';
-        for (String key in data["message"].keys) {
-          message += data["message"][key][0].toString() + '\n';
-        }
-        ResponseDataMap response =
-            ResponseDataMap(status: false, message: message);
-        return response;
+        var message = data["message"].values.join('\n');
+        return ResponseDataMap(status: false, message: message);
       }
     } else {
-      ResponseDataMap response = ResponseDataMap(
-          status: false,
-          message:
-              "gagal menambah user dengan code error ${register.statusCode}");
-      return response;
+      return ResponseDataMap(status: false, message: "Gagal menambah user dengan code error ${response.statusCode}");
     }
   }
 
   Future loginUser(data) async {
-    var uri = Uri.parse(url.BaseUrl + "/auth/login");
-    var loginUser = await http.post(uri, body: data);
+    var uri = Uri.parse("$Base_Url/register_admin"); // Pakai BaseUrl dari url.dart
+    var response = await http.post(uri, body: data);
 
-
-    if (loginUser.statusCode == 200) {
-      var data = json.decode(loginUser.body);
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
       if (data["status"] == true) {
         UserLogin userLogin = UserLogin(
-            status: data["status"],
-            token: data["token"],
-            message: data["message"],
-            id: data["user"]["id"],
-            nama_user: data["user"]["nama_user"],
-            email: data["user"]["email"],
-            role: data["user"]["role"]);
+          status: data["status"],
+          token: data["token"],
+          message: data["message"],
+          id: data["user"]["id"],
+          nama_user: data["user"]["nama_user"],
+          email: data["user"]["email"],
+          role: data["user"]["role"],
+        );
         await userLogin.prefs();
-        ResponseDataMap response = ResponseDataMap(
-            status: true, message: "Sukses login user", data: data);
-        return response;
+        return ResponseDataMap(status: true, message: "Sukses login user", data: data);
       } else {
-        ResponseDataMap response =
-            ResponseDataMap(status: false, message: 'Email dan password salah');
-        return response;
+        return ResponseDataMap(status: false, message: 'Email dan password salah');
       }
     } else {
-      ResponseDataMap response = ResponseDataMap(
-          status: false,
-          message:
-              "gagal menambah user dengan code error ${loginUser.statusCode}");
-      return response;
+      return ResponseDataMap(status: false, message: "Gagal login user dengan code error ${response.statusCode}");
     }
   }
-
 }

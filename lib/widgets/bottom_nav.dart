@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import '../style/colors.dart'; 
 import 'package:movie_flutter/models/user_login.dart';
 
 class BottomNav extends StatefulWidget {
-  int activePage;
-  BottomNav(this.activePage);
+  final int activePage;
+  const BottomNav(this.activePage, {super.key});
 
   @override
   State<BottomNav> createState() => _BottomNavState();
@@ -12,8 +13,9 @@ class BottomNav extends StatefulWidget {
 class _BottomNavState extends State<BottomNav> {
   UserLogin userLogin = UserLogin();
   String? role;
+
   getDataLogin() async {
-    var user = await userLogin!.getUserLogin();
+    var user = await userLogin.getUserLogin();
     if (user!.status != false) {
       setState(() {
         role = user.role;
@@ -25,7 +27,6 @@ class _BottomNavState extends State<BottomNav> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getDataLogin();
   }
@@ -48,38 +49,37 @@ class _BottomNavState extends State<BottomNav> {
 
   @override
   Widget build(BuildContext context) {
-    return role == "admin"
+    return role != null
         ? BottomNavigationBar(
-            selectedItemColor: Colors.black,
-            unselectedItemColor: Colors.grey,
+            backgroundColor: Colors.white,
+            selectedItemColor: AppColors.primary, // Warna aktif dari colors.dart
+            unselectedItemColor: Colors.grey[400],
             currentIndex: widget.activePage,
-            onTap: (index) => {getLink(index)},
-            items: [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: 'Home',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.file_copy),
-                  label: 'Movie',
-                ),
-              ])
-        : role == "user"
-            ? BottomNavigationBar(
-                selectedItemColor: Colors.black,
-                unselectedItemColor: Colors.grey,
-                currentIndex: widget.activePage,
-                onTap: (index) => {getLink(index)},
-                items: [
+            elevation: 10, // Tambahkan shadow efek
+            type: BottomNavigationBarType.fixed, // Supaya item tidak berubah ukuran
+            onTap: getLink, // Langsung panggil function
+            items: role == "admin"
+                ? const [
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.home),
+                      icon: Icon(Icons.dashboard, size: 28), // Ubah icon & size
+                      label: 'Dashboard',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.movie, size: 28),
+                      label: 'Movie',
+                    ),
+                  ]
+                : const [
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.home_filled, size: 28),
                       label: 'Home',
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.card_giftcard),
+                      icon: Icon(Icons.shopping_cart, size: 28),
                       label: 'Pesan',
                     ),
-                  ])
-            : Text("");
+                  ],
+          )
+        : const SizedBox(); // Jika role masih null, tampilkan SizedBox kosong agar tidak error
   }
 }

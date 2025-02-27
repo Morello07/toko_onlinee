@@ -13,11 +13,11 @@ class _PesanViewState extends State<PesanView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Pesan"),
+        title: const Text("Pesan"),
         backgroundColor: Colors.green,
         foregroundColor: Colors.white,
       ),
-      body: Center(child: Text("Halaman Pesan")),
+      body: const Center(child: Text("Halaman Pesan")),
       bottomNavigationBar: BottomNav(1),
     );
   }

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 class ResponseDataMap{
   bool status;
@@ -9,4 +8,6 @@ class ResponseDataMap{
     required this.message, 
     this.data, 
   });
+
+  get statusCode => null;
 }

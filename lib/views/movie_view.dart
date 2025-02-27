@@ -17,11 +17,11 @@ class _MovieViewState extends State<MovieView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Movie"),
+        title: const Text("Movie"),
         backgroundColor: Colors.green,
         foregroundColor: Colors.white,
       ),
-      body: Text("Movie"),
+      body: const Text("Movie"),
       bottomNavigationBar: BottomNav(1),
 
     );

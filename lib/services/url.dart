@@ -1,2 +1,1 @@
-
-   const String BaseUrl = "https://learn.smktelkom-mlg.sch.id/api";
+const String Base_Url = "http://localhost/aksa_toko_online/public/api";

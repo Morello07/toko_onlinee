@@ -16,11 +16,11 @@ class AlertMessage {
       backgroundColor: Colors.transparent,
       elevation: 0,
       content: Container(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             color: warnafill,
             border: Border.all(color: warnagaris, width: 3),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Color(0x19000000),
                 spreadRadius: 2.0,
@@ -32,16 +32,16 @@ class AlertMessage {
           ),
           child: Row(
             children: [
-              Icon(Icons.favorite, color: Colors.green),
+              const Icon(Icons.favorite, color: Colors.green),
               Padding(
-                padding: EdgeInsets.only(left: 8.0),
+                padding: const EdgeInsets.only(left: 8.0),
                 child: Text(message,
                     style:
-                        TextStyle(color: const Color.fromARGB(255, 0, 0, 0))),
+                        const TextStyle(color: Color.fromARGB(255, 0, 0, 0))),
               ),
               const Spacer(),
               TextButton(
-                  onPressed: () => {debugPrint("Undid")}, child: Text("X"))
+                  onPressed: () => {debugPrint("Undid")}, child: const Text("X"))
             ],
           )),
     );

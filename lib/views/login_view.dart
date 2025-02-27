@@ -21,7 +21,7 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Login"),
+        title: const Text("Login"),
         backgroundColor: Colors.green,
         foregroundColor: Colors.white,
         actions: [
@@ -29,15 +29,15 @@ class _LoginViewState extends State<LoginView> {
               onPressed: () {
                 Navigator.pushReplacementNamed(context, '/login');
               },
-              icon: Icon(Icons.add))
+              icon: const Icon(Icons.add))
         ],
       ),
       body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.all(10),
-          padding: EdgeInsets.all(10),
+          margin: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(color: Colors.white),
+          decoration: const BoxDecoration(color: Colors.white),
           child: Column(
             children: [
               Form(
@@ -46,7 +46,7 @@ class _LoginViewState extends State<LoginView> {
                     children: [
                       TextFormField(
                         controller: email,
-                        decoration: InputDecoration(label: Text("Email")),
+                        decoration: const InputDecoration(label: Text("Email")),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Email harus diisi';
@@ -59,7 +59,7 @@ class _LoginViewState extends State<LoginView> {
                         controller: password,
                         obscureText: showPass,
                         decoration: InputDecoration(
-                          label: Text("Password"),
+                          label: const Text("Password"),
                           suffix: IconButton(
                             onPressed: () {
                               setState(() {
@@ -67,8 +67,8 @@ class _LoginViewState extends State<LoginView> {
                               });
                             },
                             icon: showPass
-                                ? Icon(Icons.visibility)
-                                : Icon(Icons.visibility_off),
+                                ? const Icon(Icons.visibility)
+                                : const Icon(Icons.visibility_off),
                           ),
                         ),
                         validator: (value) {
@@ -97,7 +97,7 @@ class _LoginViewState extends State<LoginView> {
                             if (result.status == true) {
                               AlertMessage()
                                   .showAlert(context, result.message, true);
-                              Future.delayed(Duration(seconds: 2), () {
+                              Future.delayed(const Duration(seconds: 2), () {
                                 Navigator.pushReplacementNamed(
                                     context, '/dashboard');
                               });
@@ -107,10 +107,10 @@ class _LoginViewState extends State<LoginView> {
                             }
                           }
                         },
+                        color: Colors.lightGreen,
                         child: isLoading == false
                             ? Text("LOGIN")
                             : CircularProgressIndicator(),
-                        color: Colors.lightGreen,
                       )
                     ],
                   ))

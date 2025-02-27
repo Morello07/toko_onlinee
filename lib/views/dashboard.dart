@@ -34,7 +34,7 @@ class _DashboardViewState extends State<DashboardView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Dashboard"),
+        title: const Text("Dashboard"),
         backgroundColor: Colors.green,
         foregroundColor: Colors.white,
         actions: [
@@ -42,7 +42,7 @@ class _DashboardViewState extends State<DashboardView> {
               onPressed: () {
                 Navigator.popAndPushNamed(context, '/login');
               },
-              icon: Icon(Icons.logout))
+              icon: const Icon(Icons.logout))
         ],
       ),
       body: Center(child: Text("Selamat Datang $nama role anda $role")),
