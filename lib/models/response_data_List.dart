@@ -1,11 +1,11 @@
 
 class ResponseDataList{
   bool status;
-  String massage;
+  String message;
   Map? data;
   ResponseDataList({
     required this.status, 
-    required this.massage, 
+    required this.message, 
     required this.data
   });
 }

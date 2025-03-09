@@ -1,7 +1,6 @@
 import 'package:movie_flutter/services/user.dart';
 import 'package:movie_flutter/widgets/alert.dart';
 import 'package:flutter/material.dart';
-import '../style/registerStyle.dart';
 
 class RegisterUserView extends StatefulWidget {
   const RegisterUserView({super.key});
@@ -42,7 +41,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
               decoration: const BoxDecoration(color: Colors.white),
               child: Column(
                 children: [
-                  const Text(
+                  Text(
                     "Register User",
                     style: TextStyle(
                       fontSize: 20,
@@ -56,8 +55,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
                         children: [
                           TextFormField(
                             controller: name,
-                            decoration:
-                                const InputDecoration(label: Text("Name")),
+                            decoration:InputDecoration(label: Text("Name")),
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Nama harus diisi';
@@ -68,8 +66,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
                           ),
                           TextFormField(
                             controller: email,
-                            decoration:
-                                const InputDecoration(label: Text("Email")),
+                            decoration:InputDecoration(label: Text("Email")),
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Email harus diisi';
@@ -101,7 +98,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
                           TextFormField(
                             controller: password,
                             decoration:
-                                const InputDecoration(label: Text("Password")),
+                                InputDecoration(label: Text("Password")),
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Password harus diisi';
@@ -113,7 +110,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
                           TextFormField(
                             controller: addres,
                             decoration:
-                                const InputDecoration(label: Text("Addres")),
+                                InputDecoration(label: Text("Addres")),
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Addres harus diisi';
@@ -125,7 +122,7 @@ class _RegisterUserViewState extends State<RegisterUserView> {
                           TextFormField(
                             controller: telfon,
                             decoration:
-                                const InputDecoration(label: Text("Telfon")),
+                                InputDecoration(label: Text("Telfon")),
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'telfon harus diisi';
@@ -137,7 +134,6 @@ class _RegisterUserViewState extends State<RegisterUserView> {
                           MaterialButton(
                             onPressed: () async {
                               if (formKey.currentState!.validate()) {
-                                try {
                                   var data = {
                                     "name": name.text,
                                     "email": email.text,
@@ -145,56 +141,31 @@ class _RegisterUserViewState extends State<RegisterUserView> {
                                     "password": password.text,
                                     "addres": addres.text,
                                     "telfon": telfon.text
-                                  };
-
-                                  showDialog(
-                                    context: context,
-                                    barrierDismissible: false,
-                                    builder: (BuildContext context) {
-                                      return const Center(
-                                          child: CircularProgressIndicator());
-                                    },
-                                  );
-
+                                  };         
                                   var result = await user.registerUser(data);
-
-                                  Navigator.pop(context);
-
-                                  if (result.status == true) {
-                                    name.clear();
-                                    email.clear();
-                                    password.clear();
-                                    addres.clear();
-                                    telfon.clear();
-                                    setState(() {
-                                      role = null;
-                                    });
-
-                                    await AlertMessage().showAlert(
-                                        context, result.message, true);
-                                    Navigator.pushNamedAndRemoveUntil(
-                                        context, '/login', (route) => false);
-                                  } else {
-                                    AlertMessage().showAlert(
-                                        context, result.message, false);
-                                  }
-                                } catch (e) {
-                                  Navigator.pop(context);
+                                if (result.status == true) {
+                                  name.clear();
+                                  email.clear();
+                                  password.clear();
+                                  addres.clear();
+                                  telfon.clear();
+                                  setState(() {
+                                    role = null;
+                                  });
+                                  AlertMessage()
+                                      .showAlert(context, result.message, true);
+                                  Navigator.pushReplacementNamed(
+                                        context, '/login');
+                                  Future.delayed(Duration(seconds: 2), () {
+                                  });
+                                } else {
                                   AlertMessage().showAlert(
-                                      context, "Terjadi kesalahan: $e", false);
+                                      context, result.message, false);
                                 }
                               }
                             },
+                            child: Text("Register"),
                             color: Colors.lightGreen,
-                            textColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(vertical: 15),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: const Text(
-                              "Register",
-                              style: TextStyle(fontSize: 16),
-                            ),
                           ),
                         ],
                       ))
@@ -203,3 +174,4 @@ class _RegisterUserViewState extends State<RegisterUserView> {
     );
   }
 }
+

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../style/colors.dart'; 
 import 'package:movie_flutter/models/user_login.dart';
 
 class BottomNav extends StatefulWidget {
@@ -52,7 +51,6 @@ class _BottomNavState extends State<BottomNav> {
     return role != null
         ? BottomNavigationBar(
             backgroundColor: Colors.white,
-            selectedItemColor: AppColors.primary, // Warna aktif dari colors.dart
             unselectedItemColor: Colors.grey[400],
             currentIndex: widget.activePage,
             elevation: 10, // Tambahkan shadow efek
