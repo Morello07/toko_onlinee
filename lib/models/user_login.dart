@@ -9,6 +9,8 @@ class UserLogin {
   String? email;
   String? password;
   String? role;
+  String? addres;
+
   UserLogin(
       {this.status,
       this.token,
@@ -17,7 +19,21 @@ class UserLogin {
       this.nama_user,
       this.email,
       this.password,
-      this.role});
+      this.role,
+      this.addres});
+
+       Future prefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("status", status!);
+    prefs.setString("token", token!);
+    prefs.setString("message", message!);
+    prefs.setInt("id", id!);
+    prefs.setString("nama_user", nama_user!);
+    prefs.setString("email", email!);
+    // prefs.setString("password", password!);
+    prefs.setString("role", role!);
+    prefs.setString("addres", addres!);
+  }
 
   Future getUserLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -28,20 +44,10 @@ class UserLogin {
         id: prefs.getInt("id")!,
         nama_user: prefs.getString("nama_user")!,
         email: prefs.getString("email")!,
-        password: prefs.getString("password"),
-        role: prefs.getString("role")!);
+        // password: prefs.getString("password")!,
+        role: prefs.getString("role")!,
+        addres: prefs.getString("addres")!);
     return userLogin;
   }
 
-  Future prefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool("status", status!);
-    prefs.setString("token", token!);
-    prefs.setString("message", message!);
-    prefs.setInt("id", id!);
-    prefs.setString("nama_user", nama_user!);
-    prefs.setString("email", email!);
-    prefs.setString("password", password!);
-    prefs.setString("role", role!);
-  }
 }

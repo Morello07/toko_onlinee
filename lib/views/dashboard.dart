@@ -11,13 +11,13 @@ class DashboardView extends StatefulWidget {
 
 class _DashboardViewState extends State<DashboardView> {
   UserLogin userLogin = UserLogin();
-  String? nama;
+  String? nama_user;
   String? role;
   getUserLogin() async {
     var user = await userLogin.getUserLogin();
     if (user.status != false) {
       setState(() {
-        nama = user.nama_user;
+        nama_user = user.nama_user;
         role = user.role;
       });
     }
@@ -45,7 +45,7 @@ class _DashboardViewState extends State<DashboardView> {
               icon: const Icon(Icons.logout))
         ],
       ),
-      body: Center(child: Text("Selamat Datang $nama role anda $role")),
+      body: Center(child: Text("Selamat Datang $nama_user role anda $role")),
       bottomNavigationBar: BottomNav(0),
     );
   }

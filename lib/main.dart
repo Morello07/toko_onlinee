@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:movie_flutter/views/dashboard.dart';
 import 'package:movie_flutter/views/login_view.dart';
-import 'package:movie_flutter/views/movie_view.dart';
+import 'package:movie_flutter/views/dashboard.dart';
 import 'package:movie_flutter/views/pesan_view.dart';
 import 'package:movie_flutter/views/register_user_view.dart';
 
@@ -19,13 +18,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/login',
+      initialRoute: '/',
       routes: {
         '/': (context) => const RegisterUserView(),
         '/login': (context) => const LoginView(),
         '/dashboard': (context) => const DashboardView(),
-        '/movie': (context) => const MovieView(),
         '/pesan': (context) => const PesanView(),
       },
     );

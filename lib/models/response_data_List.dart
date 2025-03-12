@@ -2,7 +2,7 @@
 class ResponseDataList{
   bool status;
   String message;
-  Map? data;
+  List? data;
   ResponseDataList({
     required this.status, 
     required this.message, 

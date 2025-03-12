@@ -8,6 +8,4 @@ class ResponseDataMap{
     required this.message, 
     this.data, 
   });
-
-  get statusCode => null;
 }

@@ -67,8 +67,8 @@ class _LoginViewState extends State<LoginView> {
                               });
                             },
                             icon: showPass
-                                ? const Icon(Icons.visibility)
-                                : const Icon(Icons.visibility_off),
+                                ? Icon(Icons.visibility)
+                                : Icon(Icons.visibility_off),
                           ),
                         ),
                         validator: (value) {
@@ -106,6 +106,7 @@ class _LoginViewState extends State<LoginView> {
                                   .showAlert(context, result.message, false);
                             }
                           }
+
                         },
                         child: isLoading == false
                             ? Text("LOGIN")
@@ -121,4 +122,3 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 }
-
