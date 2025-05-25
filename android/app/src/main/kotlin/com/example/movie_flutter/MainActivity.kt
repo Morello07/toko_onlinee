@@ -1,4 +1,4 @@
-package com.example.movie_flutter
+package com.example.toko_online
 
 import io.flutter.embedding.android.FlutterActivity
 

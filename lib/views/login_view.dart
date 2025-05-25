@@ -1,5 +1,5 @@
-import 'package:movie_flutter/services/user.dart';
-import 'package:movie_flutter/widgets/alert.dart';
+import 'package:toko_online/services/user.dart';
+import 'package:toko_online/widgets/alert.dart';
 import 'package:flutter/material.dart';
 
 class LoginView extends StatefulWidget {

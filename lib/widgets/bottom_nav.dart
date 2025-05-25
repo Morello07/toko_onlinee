@@ -1,83 +1,84 @@
 import 'package:flutter/material.dart';
-import 'package:movie_flutter/models/user_login.dart';
+import 'package:toko_online/models/user_login.dart';
 
 class BottomNav extends StatefulWidget {
-  final int activePage;
-  const BottomNav(this.activePage, {super.key});
+  final int currentIndex;
+  const BottomNav(this.currentIndex, {Key? key}) : super(key: key);
 
   @override
   State<BottomNav> createState() => _BottomNavState();
 }
 
 class _BottomNavState extends State<BottomNav> {
-  UserLogin userLogin = UserLogin();
-  String? role;
-
-  getDataLogin() async {
-    var user = await userLogin.getUserLogin();
-    if (user!.status != false) {
-      setState(() {
-        role = user.role;
-      });
-    } else {
-      Navigator.popAndPushNamed(context, '/login');
-    }
-  }
+  String userRole = '';
 
   @override
   void initState() {
     super.initState();
-    getDataLogin();
+    getUserRole();
   }
 
-  void getLink(index) {
-    if (role == "admin") {
-      if (index == 0) {
-        Navigator.pushReplacementNamed(context, '/dashboard');
-      } else if (index == 1) {
-        Navigator.pushReplacementNamed(context, '/movie');
-      }
-    } else if (role == "user") {
-      if (index == 0) {
-        Navigator.pushReplacementNamed(context, '/dashboard');
-      } else if (index == 1) {
-        Navigator.pushReplacementNamed(context, '/pesan');
-      }
+  void getUserRole() async {
+    UserLogin userLogin = UserLogin();
+    var user = await userLogin.getUserLogin();
+    if (mounted) {
+      setState(() {
+        userRole = user.role ?? '';
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return role != null
-        ? BottomNavigationBar(
-            backgroundColor: Colors.white,
-            unselectedItemColor: Colors.grey[400],
-            currentIndex: widget.activePage,
-            elevation: 10, // Tambahkan shadow efek
-            type: BottomNavigationBarType.fixed, // Supaya item tidak berubah ukuran
-            onTap: getLink, // Langsung panggil function
-            items: role == "admin"
-                ? const [
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.dashboard, size: 28), // Ubah icon & size
-                      label: 'Dashboard',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.movie, size: 28),
-                      label: 'Movie',
-                    ),
-                  ]
-                : const [
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.home_filled, size: 28),
-                      label: 'Home',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.shopping_cart, size: 28),
-                      label: 'Pesan',
-                    ),
-                  ],
-          )
-        : const SizedBox(); // Jika role masih null, tampilkan SizedBox kosong agar tidak error
+    if (userRole == 'kasir') {
+      return BottomNavigationBar(
+        currentIndex: widget.currentIndex,
+        selectedItemColor: Colors.green,
+        unselectedItemColor: Colors.grey,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.dashboard),
+            label: 'Dashboard',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.inventory),
+            label: 'Produk',
+          ),
+        ],
+        onTap: (index) {
+          if (index == 0) {
+            Navigator.pushReplacementNamed(context, '/dashboard');
+          } else if (index == 1) {
+            Navigator.pushReplacementNamed(context, '/produk');
+          }
+        },
+      );
+    } else if (userRole == 'pelanggan') {
+      return BottomNavigationBar(
+        currentIndex: widget.currentIndex,
+        selectedItemColor: Colors.green,
+        unselectedItemColor: Colors.grey,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.dashboard),
+            label: 'Dashboard',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart),
+            label: 'Pesan',
+          ),
+        ],
+        onTap: (index) {
+          if (index == 0) {
+            Navigator.pushReplacementNamed(context, '/dashboard');
+          } else if (index == 1) {
+            Navigator.pushReplacementNamed(context, '/pesan');
+          }
+        },
+      );
+    }
+
+    // Default empty bottom navigation bar if role is neither kasir nor pelanggan
+    return const SizedBox.shrink();
   }
 }

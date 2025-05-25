@@ -1,5 +1,5 @@
-import 'package:movie_flutter/services/user.dart';
-import 'package:movie_flutter/widgets/alert.dart';
+import 'package:toko_online/services/user.dart';
+import 'package:toko_online/widgets/alert.dart';
 import 'package:flutter/material.dart';
 
 class RegisterUserView extends StatefulWidget {
@@ -44,9 +44,9 @@ class _RegisterUserViewState extends State<RegisterUserView> {
                 textAlign: TextAlign.center,
               ),
               Form(
-                  key: formKey,
-                  child: Column(
-                    children: [
+                key: formKey,
+                child: Column(
+                  children: [
                       TextFormField(
                         controller: name,
                         decoration: InputDecoration(label: Text("Name")),
@@ -118,38 +118,59 @@ class _RegisterUserViewState extends State<RegisterUserView> {
                      
                       MaterialButton(
                         onPressed: () async {
-                          if (formKey.currentState!.validate()) setState(() {});
-                          var data = {
-                            "name": name.text,
-                            "email": email.text,
-                            "password": password.text,
-                            "addres": addres.text,
-                            "role": role,
-                          };
-                          var result = await user.registerUser(data);
-                          if (result.status == true) {
-                            name.clear();
-                            email.clear();
-                            password.clear();
-                            addres.clear();
-                            setState(() {
-                              role = null;
-                            });
-                            AlertMessage()
-                                .showAlert(context, result.message, true);
-                            Future.delayed(Duration(seconds: 2), () {
-                              Navigator.pushReplacementNamed(context, '/login');
-                            });
-                          } else {
-                            AlertMessage()
-                                .showAlert(context, result.message, false);
+                          if (formKey.currentState!.validate()) {
+                            var data = {
+                              "name": name.text,
+                              "email": email.text,
+                              "password": password.text,
+                              "addres": addres.text,
+                              "role": role,
+                            };
+                            var result = await user.registerUser(data);
+                            if (result.status == true) {
+                              // Clear form fields
+                              name.clear();
+                              email.clear();
+                              password.clear();
+                              addres.clear();
+                              setState(() => role = null);
+                              
+                              // Show success message and navigate
+                              AlertMessage().showAlert(context, result.message, true);
+                              Future.delayed(const Duration(seconds: 2), () {
+                                Navigator.pushReplacementNamed(context, '/login');
+                              });
+                            } else {
+                              AlertMessage().showAlert(context, result.message, false);
+                            }
                           }
                         },
-                        child: Text("Register"),
-                        color: Colors.lightGreen,
-                      )
+                        child: const Text("REGISTER"),
+                        color: Colors.green,
+                        textColor: Colors.white,
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text("Already have an account? "),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushReplacementNamed(context, '/login');
+                            },
+                            child: const Text(
+                              "Login here",
+                              style: TextStyle(
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
-                  ))
+                  ),
+                ),
             ],
           ),
         ),

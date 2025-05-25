@@ -1,5 +1,5 @@
-import 'package:movie_flutter/models/user_login.dart';
-import 'package:movie_flutter/widgets/bottom_nav.dart';
+import 'package:toko_online/models/user_login.dart';
+import 'package:toko_online/widgets/bottom_nav.dart';
 import 'package:flutter/material.dart';
 
 class DashboardView extends StatefulWidget {
